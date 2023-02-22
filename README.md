@@ -13,3 +13,13 @@ Next, you should publish the Jwt configuration files using the vendor:publish Ar
 ```
 php artisan vendor:publish --provider="Mideal\Jwt\JwtServiceProvider"
 ```
+
+## Protecting Routes
+
+use Illuminate\Http\Request;
+
+```
+Route::middleware('auth:jwt')->get('/user', function (Request $request) {
+    return $request->user();
+});
+```
