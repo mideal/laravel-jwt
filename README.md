@@ -10,14 +10,14 @@ composer require mideal/laravel-jwt
 ```
 
 Next, you should publish the Jwt configuration files using the vendor:publish Artisan command. The jwt configuration file will be placed in your application's config directory:
-```
+```php
 php artisan vendor:publish --provider="Mideal\Jwt\JwtServiceProvider"
 ```
 
 ## Protecting Routes
 
 
-```
+```php
 use Illuminate\Http\Request;
 
 Route::middleware('auth:jwt')->get('/user', function (Request $request) {
