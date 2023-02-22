@@ -16,9 +16,9 @@ php artisan vendor:publish --provider="Mideal\Jwt\JwtServiceProvider"
 
 ## Protecting Routes
 
-use Illuminate\Http\Request;
 
 ```
+use Illuminate\Http\Request;
 Route::middleware('auth:jwt')->get('/user', function (Request $request) {
     return $request->user();
 });
