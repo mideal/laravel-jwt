@@ -1,0 +1,35 @@
+{
+    "name": "mideal/laravel-jwt",
+    "description": "Jwt auth for laravel",
+    "keywords": ["laravel", "jwt", "auth"],
+    "autoload": {
+        "psr-4": {
+            "Mideal\\Jwt\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mideal\\Jwt\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mideal"
+        }
+    ],
+    "require": {
+        "firebase/php-jwt": "^6.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Mideal\\Jwt\\JwtServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
