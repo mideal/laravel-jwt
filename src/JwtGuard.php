@@ -8,7 +8,7 @@ use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Http\Request;
 use Mideal\Jwt\Facades\JwtServiceFacade;
 
-class JWTGuard implements Guard
+class JwtGuard implements Guard
 {
     use GuardHelpers;
 
@@ -28,8 +28,10 @@ class JWTGuard implements Guard
     /**
      * Create a new authentication guard.
      */
-    public function __construct(UserProvider $provider, protected Request $request)
-    {
+    public function __construct(
+        UserProvider $provider,
+        protected Request $request
+    ) {
         $this->request = $request;
         $this->provider = $provider;
         $this->storageKeyDatabase = config('jwt.storage_key_database');

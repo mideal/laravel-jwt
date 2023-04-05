@@ -18,9 +18,18 @@
         }
     ],
     "require": {
-        "firebase/php-jwt": "^6.4"
+        "php": "^8.0.2",
+        "firebase/php-jwt": "^6.4",
+        "illuminate/contracts": "^10.0",
+        "illuminate/config": "^10.0",
+        "illuminate/auth": "^10.0",
+        "illuminate/support": "^10.0",
+        "illuminate/http": "^10.0"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.16",
+        "mockery/mockery": "^1.5",
+        "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^10.0"
     },
     "extra": {
@@ -29,6 +38,9 @@
                 "Mideal\\Jwt\\JwtServiceProvider"
             ]
         }
+    },
+    "config": {
+        "sort-packages": true
     },
     "minimum-stability": "dev",
     "prefer-stable": true
