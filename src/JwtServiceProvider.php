@@ -2,26 +2,59 @@
 
 namespace Mideal\Jwt;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
 class JwtServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
+
     public function register(): void
     {
-        $this->app->singleton('jwt', fn ($app) => new Jwt(config('jwt.'.array_reverse(explode('.', (string) $_SERVER['HTTP_HOST']))[1].'_password'), config('jwt.alg')));
+
+        config([
+            'auth.guards.jwt' => array_merge([
+                'driver' => 'jwt',
+                'provider' => config('jwt.provider'),
+            ], config('auth.guards.jwt', [])),
+        ]);
+
+        if (! app()->configurationIsCached()) {
+            $this->mergeConfigFrom(__DIR__.'/../config/jwt.php', 'jwt');
+        }
+
+        $this->app->singleton('jwt', function ($app) {
+            return new Jwt(config('jwt.password'), config('jwt.alg'));
+        });
+    }
+
+    public function boot(): void
+    {
+        if (app()->runningInConsole()) {
+
+            $this->publishes([
+                __DIR__.'/../config/jwt.php' => config_path('jwt.php'),
+            ], 'jwt-config');
+
+        }
+
+        $this->configureGuard();
     }
 
     /**
-     * Bootstrap services.
+     * Configure the Jwt authentication guard.
      *
      * @return void
      */
-    public function boot(): void
+    protected function configureGuard()
     {
+        Auth::resolved(function ($auth) {
+
+            $auth->extend('jwt', function ($app, $name, array $config) use ($auth) {
+                $guard = new JwtGuard($auth->createUserProvider($config['provider'] ?? null), request());
+                $this->app->refresh('request', $guard, 'setRequest');
+
+                return $guard;
+            });
+        });
     }
 }
